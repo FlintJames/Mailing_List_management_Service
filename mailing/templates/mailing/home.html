@@ -193,9 +193,9 @@
                     {% if user.is_authenticated %}
                     <a class="btn btn-primary" href="{% url 'mailing:client_create' %}"
                        role="button">Создать клиента</a>
-                    <a class="btn btn-primary" href="{% url 'mailing:client_create' %}"
+                    <a class="btn btn-primary" href="{% url 'mailing:message_create' %}"
                        role="button">Создать сообщение</a>
-                    <a class="btn btn-primary" href="{% url 'mailing:client_create' %}"
+                    <a class="btn btn-primary" href="{% url 'mailing:mailing_create' %}"
                        role="button">Создать рассылку</a>
                     {% endif %}
                 </p>

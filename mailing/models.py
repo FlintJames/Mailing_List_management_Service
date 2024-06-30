@@ -35,10 +35,28 @@ class Message(models.Model):
 
 
 class Mailing(models.Model):
+    CREATED = "created"
+    COMPLETED = "completed"
+    STARTED = "started"
+    STATUS_VARIANTS = [
+        (CREATED, "Создана"),
+        (COMPLETED, "Завершена"),
+        (STARTED, "Запущена"),
+    ]
+
+    DAILY = "daily"
+    WEEKLY = "weekly"
+    MONTHLY = "monthly"
+    REGULARITY_VARIANTS = [
+        (DAILY, "Один раз в день"),
+        (WEEKLY, "Один раз в неделю"),
+        (MONTHLY, "Один раз в месяц"),
+    ]
+
     time_sending = models.DateTimeField(verbose_name="Дата и время отправки")
     time_end = models.DateTimeField(verbose_name="Дата и время окончания")
-    periodicity = models.CharField(max_length=100, verbose_name="Периодичность")
-    status = models.CharField(max_length=100, verbose_name="Статус")
+    periodicity = models.CharField(max_length=100, choices=REGULARITY_VARIANTS, verbose_name="Периодичность")
+    status = models.CharField(max_length=100, choices=STATUS_VARIANTS, verbose_name="Статус")
     clients = models.ManyToManyField(Client, verbose_name="Клиент")
     message = models.ForeignKey(Message, on_delete=models.CASCADE, **NULLABLE, verbose_name="Сообщение")
 
@@ -53,8 +71,16 @@ class Mailing(models.Model):
 
 
 class Attempt(models.Model):
+    ATTEMPT_SUCCESS = 'SUCCESS'
+    ATTEMPT_FAIL = 'FAIL'
+
+    ATTEMPT_CHOICES = [
+        (ATTEMPT_SUCCESS, 'Успешно'),
+        (ATTEMPT_FAIL, 'Неуспешно'),
+    ]
+
     date_time = models.DateTimeField(auto_now_add=True, verbose_name="Дата и время последней попытки")
-    status = models.CharField(max_length=100, verbose_name="Статус попытки")
+    status = models.CharField(max_length=100, choices=ATTEMPT_CHOICES, verbose_name="Статус попытки")
     answer = models.TextField(**NULLABLE, verbose_name="Ответ почтового сервера")
     mailing = models.ForeignKey(Mailing, on_delete=models.CASCADE, verbose_name="Рассылка")
 
