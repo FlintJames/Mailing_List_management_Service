@@ -1,5 +1,6 @@
 from django.contrib import admin
-from mailing.models import Client, Mailing, Message, Attempt
+from mailing.models import Client, Mailing, Message, Attempt, Blog
+
 
 @admin.register(Client)
 class ClientAdmin(admin.ModelAdmin):
@@ -20,3 +21,7 @@ class MessageAdmin(admin.ModelAdmin):
 @admin.register(Attempt)
 class AttemptAdmin(admin.ModelAdmin):
     list_display = ['pk', 'status']
+
+@admin.register(Blog)
+class BlogAdmin(admin.ModelAdmin):
+    list_display = ['pk', 'title', 'created_at']
